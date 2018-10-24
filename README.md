@@ -52,10 +52,10 @@ Később...
 
 ## Adatbázis terv
 
-[[https://github.com/dave-hun/PizzaQueen/db.png|alt=Database]]
+![Database](/db.png)
 
 ## Use case
 
-[[https://github.com/dave-hun/PizzaQueen/usecase.jpg|alt=UseCase]]
+![Use case](/usecase.jpg)
 
 ## Végpontok
