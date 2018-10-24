@@ -5,7 +5,7 @@
 * [Nem funkcionális követelmények](README.md#nemfunc)
 * [Szerepkörök](README.md#szerep)
 
-## [Bevezetés](#intro)
+## [Bevezetés](#bevezetes)
 
 A projekt célja egy étterem online rendelés rendszerének megvalósítása.
 
@@ -49,3 +49,13 @@ miatt nem engedélyezett több ugyanolyan nevű étel/ital felvitele.
 
 ## [Szerepkörök](#szerep)
 Később...
+
+## Adatbázis terv
+
+[[https://github.com/dave-hun/PizzaQueen/db.png|alt=Database]]
+
+## Use case
+
+[[https://github.com/dave-hun/PizzaQueen/usecase.jpg|alt=UseCase]]
+
+## Végpontok

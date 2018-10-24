@@ -1,0 +1,30 @@
+User as u
+-
+UserID PK int
+Name string
+Address string
+Phone int
+
+Order as o
+-
+OrderID PK int
+UserID int FK >- u.UserID
+Products array  FK >-< d.DrinkID FK >-< f.FoodID
+TotalAmount int
+OrderTime date
+DeliveryTime date
+
+Food as f 
+-
+FoodID PK int
+Name string UNIQUE
+Description string
+Hot bool
+Vegetarian bool
+Price int
+
+Drink as d
+-
+DrinkID PK int
+Name UNIQUE string
+Price int
