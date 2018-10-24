@@ -1,9 +1,12 @@
 # PizzaQueen
-* [Bevezetés](README.md#bevezetés)
-* [Rendelők felülete](README.md#rendelok)
-* [Dolgozók felülete](README.md#dolgozok)
-* [Nem funkcionális követelmények](README.md#nemfunc)
-* [Szerepkörök](README.md#szerep)
+* [Bevezetés](README.md#bevezetsbevezetes)
+* [Rendelők felülete](README.md#rendelk-felleterendelok)
+* [Dolgozók felülete](README.md#dolgozk-felletedolgozok)
+* [Nem funkcionális követelmények](README.md#nem-funkcionlis-kvetelmnyeknemfunc)
+* [Szerepkörök](README.md#szerepkrkszerep)
+* [Adatbázis terv](README.md#adatbzis-tervadatbazis)
+* [Use case](README.md#use-caseusecase)
+* [Végpontok](README.md#vgpontokvegpont)
 
 ## [Bevezetés](#bevezetes)
 
@@ -50,12 +53,39 @@ miatt nem engedélyezett több ugyanolyan nevű étel/ital felvitele.
 ## [Szerepkörök](#szerep)
 Később...
 
-## Adatbázis terv
+## [Adatbázis terv](#adatbazis)
 
 ![Database](/db.png)
 
-## Use case
+## [Use case](#usecase)
 
 ![Use case](/usecase.jpg)
 
-## Végpontok
+## [Végpontok](#vegpont)
+
+#### Guest
+| Metódus | Request | Leírás |
+|---|---|---|
+|GET|/menu|összes étel és ital|
+|GET|/menu/food|összes étel|
+|GET|/menu/food/{id}|adott ID-vel rendelkező étel|
+|GET|/menu/drink|összes ital|
+|GET|/menu/drink/{id}|adott ID-vel rendelkező ital|
+|POST|/users|regisztrál az oldalra a megadott felhasználói adatokkal|
+
+#### User
+| Metódus | Request | Leírás |
+|---|---|---|
+|GET|/menu|összes étel és ital|
+|GET|/menu/food|összes étel|
+|GET|/menu/food/{id}|adott ID-vel rendelkező étel|
+|GET|/menu/drink|összes ital|
+|GET|/menu/drink/{id}|adott ID-vel rendelkező ital|
+|GET|/my/orders|a belépett felhasználó összes rendelése
+|GET|/my/orders/{id}|a belépett felhasználó adott ID-vel rendelkező rendelése
+|POST|/my/orders|a belépett felhasználónak létrehoz egy új rendelést
+|DELETE|/my/orders/{id}|a belépett felhasználó adott ID-vel rendelkező rendelését törli
+|PATCH|/my/data|a belépett felhasználó adatainak módosítása
+
+#### Admin
+TODO...
