@@ -2,10 +2,9 @@ package com.example.springbootpizzaqueen.Entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -17,4 +16,7 @@ public class Food extends Product {
     private boolean spicy;
 
     private boolean vegetarian;
+
+    @ManyToMany(mappedBy = "foods")
+    List<Order> orders;
 }

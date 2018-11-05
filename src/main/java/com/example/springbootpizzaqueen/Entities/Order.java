@@ -2,10 +2,7 @@ package com.example.springbootpizzaqueen.Entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -16,9 +13,14 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer orderId;
 
+    //@ManyToOne
     private Integer userId;
 
-    private List<Product> products;
+    @ManyToMany
+    private List<Food> foods;
+
+    @ManyToMany
+    private List<Drink> drinks;
 
     private Integer totalAmount;
 

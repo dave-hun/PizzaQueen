@@ -1,8 +1,10 @@
 package com.example.springbootpizzaqueen.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,4 +30,7 @@ public class User {
         ROLE_GUEST, ROLE_USER, ROLE_ADMIN
     }
 
+    //@OneToMany(mappedBy = "userID", cascade = CascadeType.REMOVE)
+    //@JsonIgnore
+    //private List<Order> orders;
 }
