@@ -1,5 +1,6 @@
 package com.example.springbootpizzaqueen.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,15 +16,18 @@ public class Orders {
 
     @ManyToOne
     @JoinColumn(name = "orders")
+    @JsonIgnore
     private User o_user;
 
     @ManyToMany
+    @JsonIgnore
     private List<Food> foods;
 
     @ManyToMany
+    @JsonIgnore
     private List<Drink> drinks;
 
-   private Integer totalAmount;
+    private Integer totalAmount;
 
     private Date orderTime;
 
