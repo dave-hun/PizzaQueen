@@ -8,13 +8,14 @@ import java.util.List;
 
 @Entity
 @Data
-public class Order {
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer orderId;
 
-    //@ManyToOne
-    private Integer userId;
+    @ManyToOne
+    @JoinColumn(name = "orders")
+    private User o_user;
 
     @ManyToMany
     private List<Food> foods;
@@ -22,7 +23,7 @@ public class Order {
     @ManyToMany
     private List<Drink> drinks;
 
-    private Integer totalAmount;
+   private Integer totalAmount;
 
     private Date orderTime;
 

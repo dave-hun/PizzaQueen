@@ -14,6 +14,12 @@ public class Drink extends Product {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer drinkId;
 
+    private String name;
+
+    private Integer price;
+
+    private String description;
+
     @ManyToMany(mappedBy = "drinks")
-    List<Order> order;
+    List<Orders> orders;
 }

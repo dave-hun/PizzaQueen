@@ -15,10 +15,16 @@ public class Food extends Product {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer foodId;
 
+    private String name;
+
+    private Integer price;
+
+    private String description;
+
     private boolean spicy;
 
     private boolean vegetarian;
 
     @ManyToMany(mappedBy = "foods")
-    List<Order> orders;
+    List<Orders> orders;
 }

@@ -7,12 +7,12 @@ import java.util.List;
 
 @Data
 public abstract class Product {
-    private String name;
+    /*private String name;
 
     private Integer price;
 
     private String description;
 
     //@ManyToMany(mappedBy = "products")
-    //List<Order> orders;
+    //List<Orders> orders;*/
 }
