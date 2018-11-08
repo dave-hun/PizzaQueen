@@ -1,24 +1,31 @@
 package com.example.springbootpizzaqueen.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
-public class Order {
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer orderId;
 
-    private Integer userId;
+    @ManyToOne
+    @JoinColumn(name = "orders")
+    @JsonIgnore
+    private User o_user;
 
-    private List<Product> products;
+    @ManyToMany
+    @JsonIgnore
+    private List<Food> foods;
+
+    @ManyToMany
+    @JsonIgnore
+    private List<Drink> drinks;
 
     private Integer totalAmount;
 
