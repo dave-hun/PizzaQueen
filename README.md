@@ -66,7 +66,6 @@ Később...
 #### Guest
 | Metódus | Request | Leírás |
 |---|---|---|
-|GET|/menu|összes étel és ital|
 |GET|/menu/food|összes étel|
 |GET|/menu/food/{id}|adott ID-vel rendelkező étel|
 |GET|/menu/drink|összes ital|
@@ -76,7 +75,6 @@ Később...
 #### User
 | Metódus | Request | Leírás |
 |---|---|---|
-|GET|/menu|összes étel és ital|
 |GET|/menu/food|összes étel|
 |GET|/menu/food/{id}|adott ID-vel rendelkező étel|
 |GET|/menu/drink|összes ital|
@@ -85,7 +83,26 @@ Később...
 |GET|/my/orders/{id}|a belépett felhasználó adott ID-vel rendelkező rendelése
 |POST|/my/orders|a belépett felhasználónak létrehoz egy új rendelést
 |DELETE|/my/orders/{id}|a belépett felhasználó adott ID-vel rendelkező rendelését törli
+|GET|/my/data|a belépett felhasználó adatainak lekérdezése
 |PATCH|/my/data|a belépett felhasználó adatainak módosítása
 
 #### Admin
-TODO...
+| Metódus | Request | Leírás |
+|---|---|---|
+|GET|/menu/food|összes étel|
+|GET|/menu/food/{id}|adott ID-vel rendelkező étel|
+|POST|/menu/food/|új étel létrehozása
+|DELETE|/menu/food/{id}|adott ID-vel rendelkező étel törlése
+|GET|/menu/drink|összes ital|
+|GET|/menu/drink/{id}|adott ID-vel rendelkező ital|
+|POST|/menu/drink|új ital létrehozása
+|DELETE|/menu/drink/{id}|adott ID-vel rendelkező ital törlése
+|GET|/orders|összes rendelés lekérdezése
+|GET|/orders/{id}|adott ID-vel rendelkező rendelés
+|POST|/orders|új rendelés létrehozása
+|PATCH|/orders/{id}|adott rendelés módosítása
+|DELETE|/orders/{id}|adott ID-vel rendelkező rendelés törlése
+|GET|/users|összes felhasználó
+|POST|/users|felhasználó létrehozása
+|PATCH|/users/{id}|adott felhasználó adatainak módosítása
+|DELETE|/users/{id}|adott felhasználó törlése
