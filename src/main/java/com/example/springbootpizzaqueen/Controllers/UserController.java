@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    //@Secured({"ROLE_USER"})
+    @Secured({"ROLE_USER"})
     public ResponseEntity<User> getUser(@PathVariable Integer id) {
         Optional<User> user = userRepository.findById(id);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -36,27 +36,28 @@ public class UserController {
 
     @PostMapping("")
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        /*Optional<User> oUser = userRepository.findByUserName(user.getUserName());
+        Optional<User> oUser = userRepository.findByUserName(user.getUserName());
         if (oUser.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(true);
-        user.setRole(User.Role.ROLE_USER);*/ // TODO: rájönni miért nincs getter/setter
+        //user.setEnabled(true);
+        user.setRole(User.Role.ROLE_USER);
         return ResponseEntity.ok(userRepository.save(user));
     }
     // TODO ?: login
-    /*@PostMapping("login")
-        public ResponseEntity login(@RequestBody User user) {
+    @PostMapping("login")
+    public ResponseEntity login(@RequestBody User user) {
        return ResponseEntity.ok().build();
-       } */
+    }
 
     @PatchMapping("/{id}")
     public ResponseEntity<User> editUser(@PathVariable Integer id, @RequestBody User user) {
         Optional<User> exist = userRepository.findById(id);
         if (exist.isPresent()) {
             User modifiable = exist.get();
-            // if(user.getUserName() != null) modifiable.setUserName(user.getUserName()); // TODO: rájönni miért nincs getter/setter
+            if(user.getUserName() != null) modifiable.setUserName(user.getUserName());
+            if(user.getRealName() != null) modifiable.setRealName(user.getRealName()); // TODO
             return ResponseEntity.ok(userRepository.save(modifiable));
         } else {
             return ResponseEntity.notFound().build();
