@@ -38,7 +38,12 @@ public class OrderController {
         Optional<Orders> exist = ordersRepository.findById(id);
         if (exist.isPresent()) {
             Orders modifiable = exist.get();
-            // if(user.getUserName() != null) modifiable.setUserName(user.getUserName()); // TODO: rájönni miért nincs getter/setter
+            if(order.getO_user() != null) modifiable.setO_user(order.getO_user());
+            if(order.getOrderTime() != null) modifiable.setOrderTime(order.getOrderTime());
+            if(order.getFoods() != null) modifiable.setFoods(order.getFoods());
+            if(order.getDrinks() != null) modifiable.setDrinks(order.getDrinks());
+            if(order.getTotalAmount() != null) modifiable.setTotalAmount(order.getTotalAmount());
+            if(order.getDeliveryTime() != null) modifiable.setDeliveryTime(order.getDeliveryTime());
             return ResponseEntity.ok(ordersRepository.save(modifiable));
         } else {
             return ResponseEntity.notFound().build();

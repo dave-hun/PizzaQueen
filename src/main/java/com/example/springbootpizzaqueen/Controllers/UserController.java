@@ -41,23 +41,27 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        //user.setEnabled(true);
         user.setRole(User.Role.ROLE_USER);
         return ResponseEntity.ok(userRepository.save(user));
     }
-    // TODO ?: login
+    /*// TODO ?: login
     @PostMapping("login")
     public ResponseEntity login(@RequestBody User user) {
        return ResponseEntity.ok().build();
-    }
+    }*/
 
     @PatchMapping("/{id}")
     public ResponseEntity<User> editUser(@PathVariable Integer id, @RequestBody User user) {
         Optional<User> exist = userRepository.findById(id);
         if (exist.isPresent()) {
             User modifiable = exist.get();
-            if(user.getUserName() != null) modifiable.setUserName(user.getUserName());
-            if(user.getRealName() != null) modifiable.setRealName(user.getRealName()); // TODO
+            if(user.getUserName() != null) modifiable.setUserName(user.getUserName()); // ez biztosan módosítható legyen?
+            if(user.getRole() != null) modifiable.setRole(user.getRole()); // ez biztosan módosítható legyen?
+            if(user.getPassword() != null) modifiable.setPassword(passwordEncoder.encode(user.getPassword()));
+            if(user.getRealName() != null) modifiable.setRealName(user.getRealName());
+            if(user.getAddress() != null) modifiable.setAddress(user.getAddress());
+            if(user.getPhoneNumber() != null) modifiable.setPhoneNumber(user.getPhoneNumber());
+            if(user.getOrders() != null) modifiable.setOrders(user.getOrders()); // nem inkább += legyen?
             return ResponseEntity.ok(userRepository.save(modifiable));
         } else {
             return ResponseEntity.notFound().build();
