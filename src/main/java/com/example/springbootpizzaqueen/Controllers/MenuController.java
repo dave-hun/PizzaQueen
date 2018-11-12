@@ -37,6 +37,11 @@ public class MenuController {
         return ResponseEntity.ok(foodRepository.save(food));
     }
 
+    @DeleteMapping("/food/{id}")
+    public void deleteFood(@PathVariable Integer id){
+        foodRepository.deleteById(id);
+    }
+
     // Drink
     @GetMapping("/drink")
     public Iterable<Drink> getAllDrink(){
@@ -58,6 +63,11 @@ public class MenuController {
     @PostMapping("/drink")
     public ResponseEntity<Drink> createDrink(@RequestBody Drink drink){
         return ResponseEntity.ok(drinkRepository.save(drink));
+    }
+
+    @DeleteMapping("/drink/{id}")
+    public void deleteDrink(@PathVariable Integer id){
+        drinkRepository.deleteById(id);
     }
 
 }

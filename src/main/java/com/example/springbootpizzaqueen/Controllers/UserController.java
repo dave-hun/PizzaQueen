@@ -32,4 +32,20 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody User user){
         return ResponseEntity.ok(userRepository.save(user));
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<User> editUser(@PathVariable Integer id, @RequestBody User user){
+        Optional<User> existuser = userRepository.findById(id);
+        if(existuser.isPresent()){
+            //order.setId(existuser.get().getId()); // TODO: rájönni hogy @Data, @Entity páros esetén miért nincsenek getterek/setterek
+            return ResponseEntity.ok(userRepository.save(user));
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Integer id){
+        userRepository.deleteById(id);
+    }
 }

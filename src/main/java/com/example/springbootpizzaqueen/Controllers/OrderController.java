@@ -32,4 +32,20 @@ public class OrderController {
     public ResponseEntity<Orders> createOrder(@RequestBody Orders order){
         return ResponseEntity.ok(ordersRepository.save(order));
     }
+
+    @PatchMapping("/orders/{id}")
+    public ResponseEntity<Orders> editOrder(@PathVariable Integer id, @RequestBody Orders order){
+        Optional<Orders> existorder = ordersRepository.findById(id);
+        if(existorder.isPresent()){
+            //order.setId(existorder.get().getId()); // TODO: rájönni hogy @Data, @Entity páros esetén miért nincsenek getterek/setterek
+            return ResponseEntity.ok(ordersRepository.save(order));
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteOrder(@PathVariable Integer id){
+        ordersRepository.deleteById(id);
+    }
 }
