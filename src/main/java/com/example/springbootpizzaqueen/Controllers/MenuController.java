@@ -22,34 +22,40 @@ public class MenuController {
 
     // Food
     @GetMapping("/food")
-    public Iterable<Food> getAllFood(){
+    public Iterable<Food> getAllFood() {
         return foodRepository.findAll();
     }
 
     @GetMapping("/food/{id}")
-    public ResponseEntity<Food> getFood(@PathVariable Integer id){
+    public ResponseEntity<Food> getFood(@PathVariable Integer id) {
         Optional<Food> food = foodRepository.findById(id);
         return food.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/food")
-    public ResponseEntity<Food> createFood(@RequestBody Food food){
+    public ResponseEntity<Food> createFood(@RequestBody Food food) {
         return ResponseEntity.ok(foodRepository.save(food));
     }
 
     @DeleteMapping("/food/{id}")
-    public void deleteFood(@PathVariable Integer id){
-        foodRepository.deleteById(id);
+    public ResponseEntity deleteFood(@PathVariable Integer id) {
+        Optional<Food> exist = foodRepository.findById(id);
+        if (exist.isPresent()) {
+            foodRepository.delete(exist.get());
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Drink
     @GetMapping("/drink")
-    public Iterable<Drink> getAllDrink(){
+    public Iterable<Drink> getAllDrink() {
         return drinkRepository.findAll();
     }
 
     @GetMapping("/drink/{id}")
-    public ResponseEntity<Drink> getDrink(@PathVariable Integer id){
+    public ResponseEntity<Drink> getDrink(@PathVariable Integer id) {
         Optional<Drink> drink = drinkRepository.findById(id);
         return drink.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
         /* A felette lévő sor ugyanez a kód, csak fancy-bb csomagolásban:
@@ -61,13 +67,19 @@ public class MenuController {
     }
 
     @PostMapping("/drink")
-    public ResponseEntity<Drink> createDrink(@RequestBody Drink drink){
+    public ResponseEntity<Drink> createDrink(@RequestBody Drink drink) {
         return ResponseEntity.ok(drinkRepository.save(drink));
     }
 
     @DeleteMapping("/drink/{id}")
-    public void deleteDrink(@PathVariable Integer id){
-        drinkRepository.deleteById(id);
-    }
+    public ResponseEntity deleteDrink(@PathVariable Integer id) {
+        Optional<Drink> exist = drinkRepository.findById(id);
+        if (exist.isPresent()) {
+            drinkRepository.delete(exist.get());
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
 
+    }
 }

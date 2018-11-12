@@ -35,17 +35,24 @@ public class OrderController {
 
     @PatchMapping("/orders/{id}")
     public ResponseEntity<Orders> editOrder(@PathVariable Integer id, @RequestBody Orders order){
-        Optional<Orders> existorder = ordersRepository.findById(id);
-        if(existorder.isPresent()){
-            //order.setId(existorder.get().getId()); // TODO: rájönni hogy @Data, @Entity páros esetén miért nincsenek getterek/setterek
-            return ResponseEntity.ok(ordersRepository.save(order));
-        }else{
+        Optional<Orders> exist = ordersRepository.findById(id);
+        if (exist.isPresent()) {
+            Orders modifiable = exist.get();
+            // if(user.getUserName() != null) modifiable.setUserName(user.getUserName()); // TODO: rájönni miért nincs getter/setter
+            return ResponseEntity.ok(ordersRepository.save(modifiable));
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOrder(@PathVariable Integer id){
-        ordersRepository.deleteById(id);
+    public ResponseEntity deleteOrder(@PathVariable Integer id){
+        Optional<Orders> existorder = ordersRepository.findById(id);
+        if (existorder.isPresent()) {
+            ordersRepository.delete(existorder.get());
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
