@@ -1,11 +1,18 @@
 package com.example.springbootpizzaqueen.Controllers;
 
 import com.example.springbootpizzaqueen.Entities.Orders;
+import com.example.springbootpizzaqueen.Entities.User;
 import com.example.springbootpizzaqueen.Repository.OrdersRepository;
+import com.example.springbootpizzaqueen.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -15,49 +22,106 @@ public class OrderController {
     // Repository
     @Autowired
     private OrdersRepository ordersRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     // Methods
     @GetMapping("")
+    @Secured({"ROLE_ADMIN"})
     public Iterable<Orders> getOrders(){
         return ordersRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Orders> getOrder(@PathVariable Integer id){
-        Optional<Orders> order = ordersRepository.findById(id);
-        return order.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/my")
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
+    public Iterable<Orders> getMyOrders(Principal principal){
+        List<Orders> myOrders = new ArrayList<>();
+        if(userRepository.findByUserName(principal.getName()).isPresent()) {
+            for (Orders o:ordersRepository.findAll()) {
+                if(principal.getName().equals(o.getO_user().getUserName())) myOrders.add(o);
+            }
+        }
+        return myOrders;
     }
 
+    // TODO: nem működik
+    @GetMapping("/{id}")
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
+    public ResponseEntity<Orders> getOrder(@PathVariable Integer id, Principal principal){
+        Optional<Orders> order = ordersRepository.findById(id);
+        if(order.isPresent()){
+            if(userRepository.findByUserName(principal.getName()).isPresent()) {
+                // Ha a kérdező admin
+                if (userRepository.findByUserName(principal.getName()).get().getRole().equals(User.Role.ROLE_ADMIN)) {
+                    return ResponseEntity.ok(order.get());
+                }
+                // Ha a saját rendelését kérdezi
+                if (principal.getName().equals(order.get().getO_user().getUserName())) {
+                    return ResponseEntity.ok(order.get());
+                }else{ // Ha másvalaki megrendelését próbálja lekérdezni
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+                }
+            }
+        }
+        // Ha nem létezik
+        return ResponseEntity.notFound().build();
+    }
+
+    // TODO: mindenki csak magának tudjon rendelést csinálni
     @PostMapping("")
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<Orders> createOrder(@RequestBody Orders order){
         return ResponseEntity.ok(ordersRepository.save(order));
     }
 
+
     @PatchMapping("/orders/{id}")
-    public ResponseEntity<Orders> editOrder(@PathVariable Integer id, @RequestBody Orders order){
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
+    public ResponseEntity<Orders> editOrder(@PathVariable Integer id, @RequestBody Orders order, Principal principal){
         Optional<Orders> exist = ordersRepository.findById(id);
         if (exist.isPresent()) {
-            Orders modifiable = exist.get();
-            if(order.getO_user() != null) modifiable.setO_user(order.getO_user());
-            if(order.getOrderTime() != null) modifiable.setOrderTime(order.getOrderTime());
-            if(order.getFoods() != null) modifiable.setFoods(order.getFoods());
-            if(order.getDrinks() != null) modifiable.setDrinks(order.getDrinks());
-            if(order.getTotalAmount() != null) modifiable.setTotalAmount(order.getTotalAmount());
-            if(order.getDeliveryTime() != null) modifiable.setDeliveryTime(order.getDeliveryTime());
-            return ResponseEntity.ok(ordersRepository.save(modifiable));
-        } else {
-            return ResponseEntity.notFound().build();
+            if (userRepository.findByUserName(principal.getName()).isPresent()) {
+                Orders modifiable = exist.get();
+                // Ha a módosító admin
+                if (userRepository.findByUserName(principal.getName()).get().getRole().equals(User.Role.ROLE_ADMIN)) {
+                    if (order.getO_user() != null) modifiable.setO_user(order.getO_user());
+                }
+                // Ha a saját rendelését módosítja
+                if (principal.getName().equals(modifiable.getO_user().getUserName())) {
+                    if (order.getOrderTime() != null) modifiable.setOrderTime(order.getOrderTime());
+                    if (order.getFoods() != null) modifiable.setFoods(order.getFoods());
+                    if (order.getDrinks() != null) modifiable.setDrinks(order.getDrinks());
+                    if (order.getTotalAmount() != null) modifiable.setTotalAmount(order.getTotalAmount());
+                    if (order.getDeliveryTime() != null) modifiable.setDeliveryTime(order.getDeliveryTime());
+                }else { // Ha másvalaki megrendelését próbálja módosítani
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+                }
+                return ResponseEntity.ok(ordersRepository.save(modifiable));
+            }
         }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteOrder(@PathVariable Integer id){
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
+    public ResponseEntity deleteOrder(@PathVariable Integer id, Principal principal) {
         Optional<Orders> existorder = ordersRepository.findById(id);
         if (existorder.isPresent()) {
-            ordersRepository.delete(existorder.get());
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
+            if (userRepository.findByUserName(principal.getName()).isPresent()) {
+                // Ha a kérdező admin
+                if (userRepository.findByUserName(principal.getName()).get().getRole().equals(User.Role.ROLE_ADMIN)) {
+                    ordersRepository.delete(existorder.get());
+                    return ResponseEntity.ok().build();
+                }
+                // Ha a saját rendelését kérdezi
+                if (principal.getName().equals(existorder.get().getO_user().getUserName())) {
+                    ordersRepository.delete(existorder.get());
+                    return ResponseEntity.ok().build();
+                } else { // Ha másvalaki megrendelését próbálja lekérdezni
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+                }
+            }
         }
+        return ResponseEntity.notFound().build();
     }
 }

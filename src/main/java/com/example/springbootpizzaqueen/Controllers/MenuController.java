@@ -6,6 +6,7 @@ import com.example.springbootpizzaqueen.Repository.DrinkRepository;
 import com.example.springbootpizzaqueen.Repository.FoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -33,11 +34,21 @@ public class MenuController {
     }
 
     @PostMapping("/food")
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity<Food> createFood(@RequestBody Food food) {
         return ResponseEntity.ok(foodRepository.save(food));
     }
 
+    @PatchMapping("/food/{id}")
+    @Secured({"ROLE_ADMIN"})
+    public ResponseEntity<Food> editFood(@PathVariable Integer id, @RequestBody Food food){
+        Optional<Food> exist = foodRepository.findById(id);
+        if (exist.isPresent()) { food.setFoodId(exist.get().getFoodId());}
+            return ResponseEntity.ok(foodRepository.save(food));
+    }
+
     @DeleteMapping("/food/{id}")
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity deleteFood(@PathVariable Integer id) {
         Optional<Food> exist = foodRepository.findById(id);
         if (exist.isPresent()) {
@@ -67,11 +78,21 @@ public class MenuController {
     }
 
     @PostMapping("/drink")
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity<Drink> createDrink(@RequestBody Drink drink) {
         return ResponseEntity.ok(drinkRepository.save(drink));
     }
 
+    @PatchMapping("/drink/{id}")
+    @Secured({"ROLE_ADMIN"})
+    public ResponseEntity<Drink> editDrink(@PathVariable Integer id, @RequestBody Drink drink){
+        Optional<Drink> exist = drinkRepository.findById(id);
+        if (exist.isPresent()) { drink.setDrinkId(exist.get().getDrinkId());}
+        return ResponseEntity.ok(drinkRepository.save(drink));
+    }
+
     @DeleteMapping("/drink/{id}")
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity deleteDrink(@PathVariable Integer id) {
         Optional<Drink> exist = drinkRepository.findById(id);
         if (exist.isPresent()) {
