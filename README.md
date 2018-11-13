@@ -92,10 +92,12 @@ Később...
 |GET|/menu/food|összes étel|
 |GET|/menu/food/{id}|adott ID-vel rendelkező étel|
 |POST|/menu/food/|új étel létrehozása
+|PATCH|/menu/food/{id}|adott ID-vel rendelkező étel szerkesztése
 |DELETE|/menu/food/{id}|adott ID-vel rendelkező étel törlése
 |GET|/menu/drink|összes ital|
 |GET|/menu/drink/{id}|adott ID-vel rendelkező ital|
 |POST|/menu/drink|új ital létrehozása
+|PATCH|/menu/drink/{id}|adott ID-vel rendelkező ital szerkesztése
 |DELETE|/menu/drink/{id}|adott ID-vel rendelkező ital törlése
 |GET|/orders|összes rendelés lekérdezése
 |GET|/orders/{id}|adott ID-vel rendelkező rendelés
