@@ -79,12 +79,13 @@ Később...
 |GET|/menu/food/{id}|adott ID-vel rendelkező étel|
 |GET|/menu/drink|összes ital|
 |GET|/menu/drink/{id}|adott ID-vel rendelkező ital|
-|GET|/my/orders|a belépett felhasználó összes rendelése
-|GET|/my/orders/{id}|a belépett felhasználó adott ID-vel rendelkező rendelése
-|POST|/my/orders|a belépett felhasználónak létrehoz egy új rendelést
-|DELETE|/my/orders/{id}|a belépett felhasználó adott ID-vel rendelkező rendelését törli
-|GET|/my/data|a belépett felhasználó adatainak lekérdezése
-|PATCH|/my/data|a belépett felhasználó adatainak módosítása
+|GET|/orders/my|a belépett felhasználó összes rendelése
+|GET|/orders/{id}|a belépett felhasználó adott ID-vel rendelkező rendelése
+|POST|/orders|a belépett felhasználónak létrehoz egy új rendelést
+|DELETE|/orders/{id}|a belépett felhasználó adott ID-vel rendelkező rendelését törli
+|GET|/users/{id}|a belépett felhasználó adatainak lekérdezése
+|PATCH|/users/{id}|a belépett felhasználó adatainak módosítása
+|DELETE|/users/{id}|a belépett felhasználó törlése
 
 #### Admin
 | Metódus | Request | Leírás |
@@ -100,6 +101,7 @@ Később...
 |PATCH|/menu/drink/{id}|adott ID-vel rendelkező ital szerkesztése
 |DELETE|/menu/drink/{id}|adott ID-vel rendelkező ital törlése
 |GET|/orders|összes rendelés lekérdezése
+|GET|/orders/my|a belépett felhasználó összes rendelése
 |GET|/orders/{id}|adott ID-vel rendelkező rendelés
 |POST|/orders|új rendelés létrehozása
 |PATCH|/orders/{id}|adott rendelés módosítása
