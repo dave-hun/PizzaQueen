@@ -51,6 +51,7 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
+    // TODO: az elején létrehozni valahogy egy admin profilt az adatbázisban
     @PostMapping("")
     public ResponseEntity<User> createUser(@RequestBody User user, Principal principal) {
         Optional<User> oUser = userRepository.findByUserName(user.getUserName());
@@ -58,13 +59,19 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        // TODO: Rájönni miért lesz az if-ben NULL
-        // Ha a létrehozó NEM admin, akkor mindenképp csak USER-t tud létrehozni
-        /*if (userRepository.findByUserName(principal.getName()).isPresent()) {
-            if (!(userRepository.findByUserName(principal.getName()).get().getRole().equals(User.Role.ROLE_ADMIN))) {
-                    user.setRole(User.Role.ROLE_USER);
+        User.Role requestRole = user.getRole();
+        user.setRole(User.Role.ROLE_USER);
+        if(principal != null){
+            Optional<User> p_user = userRepository.findByUserName(principal.getName());
+            // Ha a létrehozó admin, akkor hozhat létre admint ő is
+            if (p_user.isPresent()) {
+                if (userRepository.findByUserName(principal.getName()).isPresent()) {
+                    if (userRepository.findByUserName(principal.getName()).get().getRole().equals(User.Role.ROLE_ADMIN)) {
+                        user.setRole(requestRole);
+                    }
+                }
             }
-        }*/
+        }
         return ResponseEntity.ok(userRepository.save(user));
     }
     /*// login??

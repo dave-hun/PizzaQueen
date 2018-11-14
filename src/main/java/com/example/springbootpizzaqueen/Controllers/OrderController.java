@@ -56,7 +56,8 @@ public class OrderController {
                     return ResponseEntity.ok(order.get());
                 }
                 // Ha a saját rendelését kérdezi
-                if (principal.getName().equals(order.get().getO_user().getUserName())) {
+                if (userRepository.findByUserName(principal.getName()).get().getUserName()
+                        .equals(order.get().getO_user().getUserName())) { // NULLPOINTEREXCEPTION!
                     return ResponseEntity.ok(order.get());
                 }else{ // Ha másvalaki megrendelését próbálja lekérdezni
                     return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
