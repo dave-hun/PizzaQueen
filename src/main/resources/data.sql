@@ -1,0 +1,2 @@
+insert into USER (USER_ID ,ADDRESS ,PASSWORD ,PHONE_NUMBER ,REAL_NAME ,ROLE ,USER_NAME )
+ values (1,'cim','$2a$10$ft4tRkxc7A5xHoyAZVLXwuOEeDUN/qQMFVxayHAjeL7L1utVLmG.C','1234567','DefaultAdmin','ROLE_ADMIN','sa'); -- jelszo: pw
