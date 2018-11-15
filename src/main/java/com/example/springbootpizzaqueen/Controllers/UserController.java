@@ -51,17 +51,16 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
-    // TODO: az elején létrehozni valahogy egy admin profilt az adatbázisban
     @PostMapping("")
-    public ResponseEntity<User> createUser(@RequestBody User user, Principal principal) {
+    public ResponseEntity<User> createUser(@RequestBody User user) {
         Optional<User> oUser = userRepository.findByUserName(user.getUserName());
         if (oUser.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        User.Role requestRole = user.getRole();
+        //User.Role requestRole = user.getRole();
         user.setRole(User.Role.ROLE_USER);
-        if(principal != null){
+        /*if(principal != null){
             Optional<User> p_user = userRepository.findByUserName(principal.getName());
             // Ha a létrehozó admin, akkor hozhat létre admint ő is
             if (p_user.isPresent()) {
@@ -71,14 +70,20 @@ public class UserController {
                     }
                 }
             }
-        }
+        }*/
         return ResponseEntity.ok(userRepository.save(user));
     }
-    /*// login??
-    @PostMapping("login")
-    public ResponseEntity login(@RequestBody User user) {
-       return ResponseEntity.ok().build();
-    }*/
+
+    @PostMapping("/createAdmin")
+    @Secured({"ROLE_ADMIN"})
+    public ResponseEntity<User> createAdmin(@RequestBody User user){
+        Optional<User> oUser = userRepository.findByUserName(user.getUserName());
+        if (oUser.isPresent()) {
+            return ResponseEntity.badRequest().build();
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return ResponseEntity.ok(userRepository.save(user));
+    }
 
     @PatchMapping("/{id}")
     @Secured({"ROLE_USER","ROLE_ADMIN"})

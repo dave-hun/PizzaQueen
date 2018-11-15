@@ -44,7 +44,7 @@ public class OrderController {
         return myOrders;
     }
 
-    // TODO: nem működik
+    // TODO: NULLPOINTEREXCEPTION az order.getO_user.getUserName()-nél, mert a táblák még érdekesen vannak összecsatolva
     @GetMapping("/{id}")
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     public ResponseEntity<Orders> getOrder(@PathVariable Integer id, Principal principal){
@@ -68,11 +68,22 @@ public class OrderController {
         return ResponseEntity.notFound().build();
     }
 
-    // TODO: mindenki csak magának tudjon rendelést csinálni
     @PostMapping("")
     @Secured({"ROLE_USER","ROLE_ADMIN"})
-    public ResponseEntity<Orders> createOrder(@RequestBody Orders order){
-        return ResponseEntity.ok(ordersRepository.save(order));
+    public ResponseEntity<Orders> createOrder(@RequestBody Orders order, Principal principal){
+        if (userRepository.findByUserName(principal.getName()).isPresent()) {
+            // Ha a posztoló admin
+            if (userRepository.findByUserName(principal.getName()).get().getRole().equals(User.Role.ROLE_ADMIN)) {
+                return ResponseEntity.ok(ordersRepository.save(order));
+            }
+            // Ha saját magának vesz fel rendelést
+            if (userRepository.findByUserName(principal.getName()).get().getUserName().equals(order.getO_user().getUserName())) { // TODO
+                return ResponseEntity.ok(ordersRepository.save(order));
+            }else { // Ha másvalakinek próbál meg rendelni
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+        }
+        return ResponseEntity.badRequest().build(); // Nem létezik a rendelő
     }
 
 

@@ -11,20 +11,20 @@ import java.util.List;
 @Data
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderId;
 
     @ManyToOne
     @JoinColumn(name = "orders")
-    @JsonIgnore
+    //@JsonIgnore
     private User o_user;
 
     @ManyToMany
-    @JsonIgnore
+    //@JsonIgnore
     private List<Food> foods;
 
     @ManyToMany
-    @JsonIgnore
+    //@JsonIgnore
     private List<Drink> drinks;
 
     private Integer totalAmount;
