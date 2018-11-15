@@ -108,5 +108,6 @@ Később...
 |DELETE|/orders/{id}|adott ID-vel rendelkező rendelés törlése
 |GET|/users|összes felhasználó
 |POST|/users|felhasználó létrehozása
+|POST|/users/createAdmin|admin felhasználó létrehozása
 |PATCH|/users/{id}|adott felhasználó adatainak módosítása
 |DELETE|/users/{id}|adott felhasználó törlése
