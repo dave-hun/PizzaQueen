@@ -1,8 +1,6 @@
 package com.example.springbootpizzaqueen.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,7 +8,7 @@ import java.util.List;
 @Data
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
     private String userName;
