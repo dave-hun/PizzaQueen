@@ -43,8 +43,16 @@ public class MenuController {
     @Secured({"ROLE_ADMIN"})
     public ResponseEntity<Food> editFood(@PathVariable Integer id, @RequestBody Food food){
         Optional<Food> exist = foodRepository.findById(id);
-        if (exist.isPresent()) { food.setFoodId(exist.get().getFoodId());}
-            return ResponseEntity.ok(foodRepository.save(food));
+        if (exist.isPresent()) {
+            Food modified = exist.get();
+            if(modified.getName() != null) modified.setName(food.getName());
+            if(modified.getDescription() != null) modified.setDescription(food.getDescription());
+            if(modified.getPrice() != null) modified.setPrice(food.getPrice());
+            if(modified.isSpicy() != food.isSpicy()) modified.setSpicy(food.isSpicy());
+            if(modified.isVegetarian() != food.isVegetarian()) modified.setVegetarian(food.isVegetarian());
+            return ResponseEntity.ok(foodRepository.save(modified));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/food/{id}")
@@ -87,8 +95,14 @@ public class MenuController {
     @Secured({"ROLE_ADMIN"})
     public ResponseEntity<Drink> editDrink(@PathVariable Integer id, @RequestBody Drink drink){
         Optional<Drink> exist = drinkRepository.findById(id);
-        if (exist.isPresent()) { drink.setDrinkId(exist.get().getDrinkId());}
-        return ResponseEntity.ok(drinkRepository.save(drink));
+        if (exist.isPresent()) {
+            Drink modified = exist.get();
+            if(modified.getName() != null) modified.setName(drink.getName());
+            if(modified.getDescription() != null)modified.setDescription(drink.getDescription());
+            if(modified.getPrice() != null)modified.setPrice(drink.getPrice());
+            return ResponseEntity.ok(drinkRepository.save(modified));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/drink/{id}")

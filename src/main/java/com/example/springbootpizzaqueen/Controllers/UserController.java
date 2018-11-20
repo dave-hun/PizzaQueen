@@ -101,7 +101,7 @@ public class UserController {
                     if (user.getPhoneNumber() != null) modifiable.setPhoneNumber(user.getPhoneNumber());
                     // Ha a módosító admin, akkor ezeket is teheti
                     if (userRepository.findByUserName(principal.getName()).get().getRole().equals(User.Role.ROLE_ADMIN)) {
-                        if (user.getUserId() != null) modifiable.setUserId(user.getUserId());
+                        //if (user.getUserId() != null) modifiable.setUserId(user.getUserId());
                         if (user.getUserName() != null) modifiable.setUserName(user.getUserName());
                         if (user.getRole() != null) modifiable.setRole(user.getRole());
                         if (user.getOrders() != null) modifiable.setOrders(user.getOrders());
