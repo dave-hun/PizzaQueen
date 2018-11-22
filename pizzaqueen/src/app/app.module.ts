@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -16,6 +17,8 @@ import { LoginComponent } from './login/login.component';
 import { FoodListComponent } from './food-list/food-list.component';
 import { DrinkListComponent } from './drink-list/drink-list.component';
 
+import { FoodService } from './services/food.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +27,7 @@ import { DrinkListComponent } from './drink-list/drink-list.component';
     HomeComponent,
     LoginComponent,
     FoodListComponent,
-    DrinkListComponent
+    DrinkListComponent,
   ],
   imports: [
     FlexLayoutModule,
@@ -41,9 +44,12 @@ import { DrinkListComponent } from './drink-list/drink-list.component';
     MatPaginatorModule,
     MatCheckboxModule,
     MatSortModule,
+    HttpClientModule,
     NgbModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    FoodService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
