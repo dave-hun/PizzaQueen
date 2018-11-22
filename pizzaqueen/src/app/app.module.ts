@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatIconModule, MatButtonModule, MatTabsModule, MatTableModule, MatFormFieldModule, MatInputModule,
-  MatPaginatorModule } from '@angular/material';
+  MatPaginatorModule, MatCheckboxModule, MatSortModule } from '@angular/material';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
@@ -39,6 +39,8 @@ import { DrinkListComponent } from './drink-list/drink-list.component';
     MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,
+    MatCheckboxModule,
+    MatSortModule,
     NgbModule.forRoot()
   ],
   providers: [],

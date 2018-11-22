@@ -1,25 +1,25 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
-export interface PeriodicElement {
+export interface Food {
   name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-  plus: string;
+  description: string;
+  vegetarian: boolean;
+  spicy: boolean;
+  price: number;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H', plus: 'cica'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He', plus: 'kutya'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li', plus: 'pingvin'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be', plus: 'beka'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B', plus: 'harcsa'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C', plus: 'tigris'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N', plus: 'cica'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O', plus: 'cica'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F', plus: 'cica'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne', plus: 'cica'},
+const ELEMENT_DATA: Food[] = [
+  {name: 'Magyaros', description: 'szalámi, kukorica', vegetarian: false, spicy: true, price: 990},
+  {name: 'Kolbászos', description: 'kolbász', vegetarian: true, spicy: true, price: 1990},
+  {name: 'Bolognai', description: 'bolognai szósz', vegetarian: false, spicy: true, price: 1490},
+  {name: 'Chilis', description: 'chilisbab',  vegetarian: true, spicy: false, price: 1290},
+  {name: 'SonGo', description: 'sonka, gomba',  vegetarian: false, spicy: false, price: 1390},
+  {name: 'Sonkás', description: 'sonka', vegetarian: true, spicy: true, price: 1290},
+  {name: 'Gombás', description: 'gomba', vegetarian: true, spicy: false, price: 1890},
+  {name: 'Csirkés', description: 'paradicsom, csirkemell', vegetarian: false, spicy: true, price: 990},
+  {name: 'Kukoricás', description: 'kukorica', vegetarian: false, spicy: false, price: 890},
+  {name: 'Olasz', description: 'sonka, szalámi', vegetarian: false, spicy: true, price: 1390},
 ];
 
 @Component({
@@ -29,10 +29,11 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class FoodListComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'plus'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['name', 'description', 'vegetarian', 'spicy', 'price'];
+  dataSource = new MatTableDataSource<Food>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -41,6 +42,10 @@ export class FoodListComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.dataSource.filterPredicate = function(data, filter: string): boolean {
+      return data.name.includes(filter) || data.description.includes(filter);
+    };
   }
 
 }
