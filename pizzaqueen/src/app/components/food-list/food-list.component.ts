@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { FoodService } from '../services/food.service';
+import { FoodService } from '../../services/food.service';
+import { Food } from 'src/app/model/food';
 // import { Observable } from 'rxjs';
 // import {DataSource} from '@angular/cdk/collections';
 // import { BehaviorSubject } from 'rxjs';
@@ -43,9 +44,9 @@ export class FoodListComponent implements OnInit {
     this.foodService.getFood().subscribe(
       data => { this.dataSource.data = data; }
     );
-    // this.dataSource.filterPredicate = function(data, filter: string): boolean {
-    //   return data.name.includes(filter) || data.description.includes(filter);
-    // };
+    this.dataSource.filterPredicate = function(data: Food, filter: string): boolean {
+      return ((data.name.includes(filter)) || (data.description.includes(filter)));
+    };
   }
 
 }
