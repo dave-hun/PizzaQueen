@@ -19,6 +19,7 @@ import { DrinkListComponent } from './components/drink-list/drink-list.component
 
 import { FoodService } from './services/food.service';
 import { DrinkService } from './services/drink.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,9 @@ import { DrinkService } from './services/drink.service';
     MatSortModule,
     HttpClientModule,
     MatSnackBarModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbModule.forRoot()
   ],
   providers: [

@@ -2,6 +2,7 @@ package com.example.springbootpizzaqueen.Controllers;
 
 import com.example.springbootpizzaqueen.Entities.User;
 import com.example.springbootpizzaqueen.Repository.UserRepository;
+import com.example.springbootpizzaqueen.security.AuthenticatedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,8 @@ public class UserController {
     private UserRepository userRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private AuthenticatedUser authenticatedUser;
 
     // Methods
     @GetMapping("")
@@ -138,5 +141,10 @@ public class UserController {
         return ResponseEntity.notFound().build();
 
 
+    }
+
+    @PostMapping("login")
+    public ResponseEntity<User> login() {
+        return ResponseEntity.ok(authenticatedUser.getUser());
     }
 }
