@@ -29,7 +29,7 @@ export class AuthService {
     try {
       this.token = btoa(`${username}:${password}`);
       httpOptions.headers = httpOptions.headers.set('Authorization', `Basic ${this.token}`);
-      this.user = await this.http.post<User>(`${this.authUrl}/login`, httpOptions).toPromise();
+      this.user = await this.http.post<User>(`${this.authUrl}`, httpOptions).toPromise();
       this.isLoggedIn = true;
       return this.user;
     } catch (e) {
