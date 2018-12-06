@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatSnackBar } from '@angular/material';
 import { FoodService } from '../../services/food.service';
 import { Food } from 'src/app/model/food';
 // import { Observable } from 'rxjs';
@@ -28,7 +28,6 @@ export class FoodListComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'description', 'vegetarian', 'spicy', 'price'];
   dataSource = new MatTableDataSource();
-  // dataSource = new FoodSource(this.foodService);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -36,7 +35,7 @@ export class FoodListComponent implements OnInit {
   applyFilter(filterValue: string) {
    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  constructor(private foodService: FoodService) { }
+  constructor(private foodService: FoodService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
@@ -49,14 +48,15 @@ export class FoodListComponent implements OnInit {
     };
   }
 
-}
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 1500,
+    });
+  }
 
-// export class FoodSource extends MatTableDataSource<Food> {
-//   constructor(private foodservice: FoodService) {
-//     super();
-//   }
-//   connect(): BehaviorSubject<Food[]> {
-//     return new BehaviorSubject<Food[]>(this.foodservice.getFood());
-//   }
-//   disconnect() {}
-// }
+  getRecord(row) {
+    console.log(row);
+    this.openSnackBar(row.name + ' sikeresen a kosárhoz adva!', '');
+  }
+
+}
