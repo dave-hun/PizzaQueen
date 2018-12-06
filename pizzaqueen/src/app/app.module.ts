@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatIconModule, MatButtonModule, MatTabsModule, MatTableModule, MatFormFieldModule, MatInputModule,
-  MatPaginatorModule, MatCheckboxModule, MatSortModule } from '@angular/material';
+  MatPaginatorModule, MatCheckboxModule, MatSortModule, MatSnackBar, MatSnackBarModule } from '@angular/material';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
@@ -46,6 +46,7 @@ import { DrinkService } from './services/drink.service';
     MatCheckboxModule,
     MatSortModule,
     HttpClientModule,
+    MatSnackBarModule,
     NgbModule.forRoot()
   ],
   providers: [
