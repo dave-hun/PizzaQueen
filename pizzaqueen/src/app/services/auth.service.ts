@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { User } from '../model/user';
+import { Urls } from '../services/urls';
 
 export const httpOptions = {
   headers: new HttpHeaders({
@@ -18,7 +19,7 @@ export class AuthService {
   user: User;
   token: string;
 
-  private authUrl = 'http://localhost:8080/users';
+  private authUrl = Urls.authUrl;
 
   constructor(
     private http: HttpClient
