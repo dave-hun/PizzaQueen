@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/']);
       }
     } catch (e) {
-      this.message = 'Cannot log in!';
+      this.message = 'Valamit elgépeltél, fuss neki mégegyszer!';
     }
   }
 
