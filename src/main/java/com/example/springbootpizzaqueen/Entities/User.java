@@ -29,7 +29,7 @@ public class User {
         ROLE_GUEST, ROLE_USER, ROLE_ADMIN
     }
 
-    @OneToMany(mappedBy = "o_user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "o_user", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Orders> orders;
 }
