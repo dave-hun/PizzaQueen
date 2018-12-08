@@ -1,0 +1,25 @@
+table {
+    width: 60%;
+  }
+  
+  .table-container {
+    /* height: 800px; */
+    overflow: auto;
+  }
+
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .name_highlighter {
+    background-color: red;
+}
+
+.mat-row.hovered {
+  background: #eee;
+}
+
+.mat-form-field {
+    width: 20%;
+}
