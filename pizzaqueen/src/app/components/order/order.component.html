@@ -1,0 +1,9 @@
+<div>
+  Kiválasztva: {{ selectedOptions | json }}
+</div>
+
+<mat-selection-list #list [(ngModel)]="selectedOptions" (ngModelChange)="onNgModelChange($event)">
+    <mat-list-option *ngFor="let item of orderlist" [value]="item.name">
+      {{item.name}}
+    </mat-list-option>
+</mat-selection-list>

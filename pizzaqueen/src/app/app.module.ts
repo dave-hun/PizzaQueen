@@ -20,6 +20,8 @@ import { DrinkListComponent } from './components/drink-list/drink-list.component
 import { FoodService } from './services/food.service';
 import { DrinkService } from './services/drink.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OrderComponent } from './components/order/order.component';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LoginComponent,
     FoodListComponent,
     DrinkListComponent,
+    OrderComponent,
   ],
   imports: [
     FlexLayoutModule,
@@ -51,6 +54,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    MatListModule,
     NgbModule.forRoot()
   ],
   providers: [

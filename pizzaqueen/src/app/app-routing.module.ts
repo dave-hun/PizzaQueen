@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { componentFactoryName } from '@angular/compiler';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './services/auth.guard';
+import { OrderComponent } from './components/order/order.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'order',
+    component: OrderComponent
   }
 ];
 

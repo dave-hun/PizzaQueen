@@ -5,12 +5,10 @@
   </button>
   <button mat-button routerLink="/menu">Menü</button>
   <div *ngIf="authService.isLoggedIn">
-    <button mat-button routerLink='/home'>Neved: {{ authService.user.userName }}</button>
+    <button mat-button routerLink='/order'>Profil: {{ authService.user.userName }}</button>
     <button mat-button (click)="logout()">Logout</button>
   </div>
   <div *ngIf="!authService.isLoggedIn">
     <button mat-button routerLink="/login">Login</button>
   </div>
 </mat-toolbar>
-
-  

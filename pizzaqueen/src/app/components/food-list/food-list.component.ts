@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatSnackBar } from '@angular/material';
 import { FoodService } from '../../services/food.service';
 import { Food } from 'src/app/model/food';
+import { OrderService } from 'src/app/services/order.service';
 // import { Observable } from 'rxjs';
 // import {DataSource} from '@angular/cdk/collections';
 // import { BehaviorSubject } from 'rxjs';
@@ -35,7 +36,7 @@ export class FoodListComponent implements OnInit {
   applyFilter(filterValue: string) {
    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  constructor(private foodService: FoodService, public snackBar: MatSnackBar) { }
+  constructor(private foodService: FoodService, public snackBar: MatSnackBar, public orderService: OrderService) { }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
@@ -56,6 +57,7 @@ export class FoodListComponent implements OnInit {
 
   getRecord(row) {
     console.log(row);
+    this.orderService.addFood(row);
     this.openSnackBar(row.name + ' sikeresen a kosárhoz adva!', '');
   }
 
